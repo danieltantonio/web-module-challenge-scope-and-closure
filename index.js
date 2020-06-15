@@ -27,11 +27,11 @@ function processFirstItem(stringList, callback) {
  * Study the code for counter1 and counter2. Answer the questions below.
  * 
  * 1. What is the difference between counter1 and counter2?
- * 
+ *    A.) Counter 1 has a count within the scope of the function where counter 2 has a counter within the global scope.
  * 2. Which of the two uses a closure? How can you tell?
- * 
+ *    A.) The first function, because of the private variable.
  * 3. In what scenario would the counter1 code be preferable? In what scenario would counter2 be better? 
- *
+ *    A.) Counter 1 would be preferable when you are trying to have multiple variables that need to use the same function. Counter 2 is preferable when you are needing to change a variable within the global scope.
 */
 
 // counter1 code
@@ -56,17 +56,15 @@ function counter2() {
 
 Write a function called `inning` that generates a random number of points that a team scored in an inning. This should be a whole number between 0 and 2. */
 
-function inning(/*Code Here*/){
-
-    /*Code Here*/
-
+function inning(teamPoints){
+  return teamPoints + Math.round(Math.random() * 2);
 }
 
 /* Task 3: finalScore()
 
 Write a higher order function called `finalScore` that accepts the callback function `inning` (from above) and a number of innings and and returns the final score of the game in the form of an object.
 
-For example, 
+For example,
 
 finalScore(inning, 9) might return: 
 {
@@ -76,11 +74,16 @@ finalScore(inning, 9) might return:
 
 */ 
 
-function finalScore(/*code Here*/){
+function finalScore(callback, num){
+  let teams = { "home": 0, "away": 0 };
+  for(let i = 0; i < num; i++) {
+    teams.home = callback(teams.home);
+    teams.away = callback(teams.away)
+  }
+  return teams;
+};
 
-  /*Code Here*/
-
-}
+console.log(finalScore(inning, 9));
 
 /* Task 4: 
 
@@ -103,8 +106,34 @@ and returns the score at each pont in the game, like so:
 
 Final Score: 6 - 10 */
 
-function scoreboard(/* CODE HERE */) {
-  /* CODE HERE */
+function scoreboard(callback, num) {
+  let round = "";
+  let teams = { "home": 0, "away": 0 };
+
+  for(let i = 1; i <= 9; i++) {
+    switch (i) {
+      case 1:
+        round = "st";
+        break;
+      case 2:
+        round = "nd";
+        break;
+      case 3:
+        round = "rd";
+        break;
+      default:
+        round = "th";
+        break;
+    }
+
+    teams.home = callback(teams.home);
+    teams.away = callback(teams.away);
+
+    console.log(`${i}${round} inning: ${teams.home} - ${teams.away}`);
+  }
+
+  console.log(`Final Score: ${teams.home} - ${teams.away}`);
 }
 
+scoreboard(inning, 9)
 

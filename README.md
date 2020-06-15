@@ -44,6 +44,10 @@ Edit the `ReadMe` file with your answers.
 1. In your own words, define closure (1-2 sentences).
 2. Study the following code, then answer the questions below.
 
+### Task 2b - Answers by Daniel Antonio
+1. A closure is a way to access a private variable even after it is terminated.
+2. a. The closure is used within the returned function. b. The numbers never reach 6 and can get a 0. Switch Math.floor to Math.round. c. Within the returned function.
+
 ```js
 function personalDice(name){
   return function(){
